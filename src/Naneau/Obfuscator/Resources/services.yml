@@ -1,85 +1,85 @@
 parameters:
 
     # Ignore lists
-    naneau.obfuscator.node_visitor.scramble_variable.ignore: []
-    naneau.obfuscator.node_visitor.scramble_private_method.ignore: []
-    naneau.obfuscator.node_visitor.scramble_private_property.ignore: []
-    naneau.obfuscator.node_visitor.scramble_use.ignore: []
+    obfuscator.node_visitor.scramble_variable.ignore: []
+    obfuscator.node_visitor.scramble_private_method.ignore: []
+    obfuscator.node_visitor.scramble_private_property.ignore: []
+    obfuscator.node_visitor.scramble_use.ignore: []
 
 services:
 
     # Obfuscator
-    naneau.obfuscator:
+    obfuscator:
         class: Naneau\Obfuscator\Obfuscator
         calls:
-            - [setParser, [@naneau.obfuscator.parser]]
-            - [setTraverser, [@naneau.obfuscator.node_traverser]]
-            - [setPrettyPrinter, [@naneau.obfuscator.pretty_printer]]
-            - [setEventDispatcher, [@naneau.obfuscator.event_dispatcher]]
+            - [setParser, [@obfuscator.parser]]
+            - [setTraverser, [@obfuscator.node_traverser]]
+            - [setPrettyPrinter, [@obfuscator.pretty_printer]]
+            - [setEventDispatcher, [@obfuscator.event_dispatcher]]
 
     # String scrambler
-    naneau.obfuscator.scrambler:
+    obfuscator.scrambler:
         class: Naneau\Obfuscator\StringScrambler
 
     # Node traverser
-    naneau.obfuscator.node_traverser:
+    obfuscator.node_traverser:
         class: PhpParser\NodeTraverser
         calls:
-            - [addVisitor, [@naneau.obfuscator.node_visitor.scramble_variable]]
-            - [addVisitor, [@naneau.obfuscator.node_visitor.scramble_private_method]]
+            - [addVisitor, [@obfuscator.node_visitor.scramble_variable]]
+            - [addVisitor, [@obfuscator.node_visitor.scramble_private_method]]
 
     # Variable scrambler
-    naneau.obfuscator.node_visitor.scramble_variable:
+    obfuscator.node_visitor.scramble_variable:
         class: Naneau\Obfuscator\Node\Visitor\ScrambleVariable
         arguments:
-             - @naneau.obfuscator.scrambler
+             - @obfuscator.scrambler
         calls:
-            - [addIgnore, [%naneau.obfuscator.node_visitor.scramble_variable.ignore%]]
+            - [addIgnore, [%obfuscator.node_visitor.scramble_variable.ignore%]]
 
     # Scramble private methods
-    naneau.obfuscator.node_visitor.scramble_private_method:
+    obfuscator.node_visitor.scramble_private_method:
         class: Naneau\Obfuscator\Node\Visitor\ScramblePrivateMethod
         arguments:
-             - @naneau.obfuscator.scrambler
+             - @obfuscator.scrambler
         calls:
-            - [addIgnore, [%naneau.obfuscator.node_visitor.scramble_private_method.ignore%]]
+            - [addIgnore, [%obfuscator.node_visitor.scramble_private_method.ignore%]]
 
     # Scramble private properties
-    naneau.obfuscator.node_visitor.scramble_private_property:
+    obfuscator.node_visitor.scramble_private_property:
         class: Naneau\Obfuscator\Node\Visitor\ScramblePrivateProperty
         arguments:
-             - @naneau.obfuscator.scrambler
+             - @obfuscator.scrambler
         calls:
-            - [addIgnore, [%naneau.obfuscator.node_visitor.scramble_private_property.ignore%]]
+            - [addIgnore, [%obfuscator.node_visitor.scramble_private_property.ignore%]]
 
     # Scramble use statements
-    naneau.obfuscator.node_visitor.scramble_use:
+    obfuscator.node_visitor.scramble_use:
         class: Naneau\Obfuscator\Node\Visitor\ScrambleUse
         arguments:
-             - @naneau.obfuscator.scrambler
+             - @obfuscator.scrambler
         calls:
-            - [addIgnore, [%naneau.obfuscator.node_visitor.scramble_use.ignore%]]
+            - [addIgnore, [%obfuscator.node_visitor.scramble_use.ignore%]]
 
     # Name resolver (needed before scramble_use)
-    naneau.obfuscator.node_visitor.name_resolver:
+    obfuscator.node_visitor.name_resolver:
         class: PhpParser\NodeVisitor\NameResolver
 
     # Parser
-    naneau.obfuscator.parser:
+    obfuscator.parser:
         class: PhpParser\Parser
         arguments:
-            - @naneau.obfuscator.lexer
+            - @obfuscator.lexer
 
     # Lexer
-    naneau.obfuscator.lexer:
+    obfuscator.lexer:
         class: PhpParser\Lexer
 
     # Pretty printer
-    naneau.obfuscator.pretty_printer:
+    obfuscator.pretty_printer:
         class: PhpParser\PrettyPrinter\Standard
 
     # Event dispatcher
-    naneau.obfuscator.event_dispatcher:
+    obfuscator.event_dispatcher:
         class: Symfony\Component\EventDispatcher\ContainerAwareEventDispatcher
         arguments:
             - @service_container

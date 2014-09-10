@@ -159,7 +159,7 @@ class ObfuscateCommand extends Command
      */
     public function getObfuscator()
     {
-        return $this->getContainer()->getContainer()->get('naneau.obfuscator');
+        return $this->getContainer()->getContainer()->get('obfuscator');
     }
 
     /**
@@ -167,7 +167,7 @@ class ObfuscateCommand extends Command
      *
      * @param string $from
      * @param string $to
-     * @return void
+     * @return ObfuscateCommand
      **/
     private function copyDir($from, $to)
     {
@@ -181,6 +181,8 @@ class ObfuscateCommand extends Command
         if ($return !== 0)  {
             throw new \Exception('Could not copy directory');
         }
+
+        return $this;
     }
 
     /**
