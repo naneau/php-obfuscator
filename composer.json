@@ -1,0 +1,28 @@
+{
+    "name":               "naneau/php-obfuscator",
+    "description":        "A basic but functional PHP obfuscator for object oriented PHP",
+    "license":            "MIT",
+    "minimum-stability":  "dev",
+
+    "autoload": {
+        "psr-4": {
+            "Naneau\\Obfuscator\\": "src/Naneau/Obfuscator/"
+        }
+    },
+
+    "authors": [
+        {
+            "name":   "Maurice Fonk",
+            "email":  "git@naneau.net"
+        }
+    ],
+
+    "require": {
+        "nikic/php-parser":              "~1",
+        "symfony/console":               "~2.5",
+        "symfony/dependency-injection":  "~2.5",
+        "symfony/config":                "~2.5",
+        "symfony/yaml":                  "~2.5",
+        "symfony/event-dispatcher":      "~2.5"
+    }
+}

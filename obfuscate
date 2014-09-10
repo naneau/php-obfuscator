@@ -1,0 +1,11 @@
+#!/usr/bin/env php
+<?php
+
+include __DIR__ . '/vendor/autoload.php';
+
+ini_set('xdebug.max_nesting_level', 2000);
+
+$app = new Symfony\Component\Console\Application;
+
+$app->add(new Naneau\Obfuscator\Console\Command\ObfuscateCommand);
+$app->run();
