@@ -36,7 +36,7 @@ abstract class Scrambler extends NodeVisitorAbstract
     /**
      * Variables to ignore
      *
-     * @var string
+     * @var string[]
      **/
     private $ignore = array();
 
