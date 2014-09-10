@@ -173,7 +173,7 @@ class ObfuscateCommand extends Command
     {
         // FIXME implement native copy
         $output = array();
-        $return;
+        $return = 0;
         $command = sprintf('cp -rf %s %s', $from, $to);
 
         exec($command, $output, $return);
