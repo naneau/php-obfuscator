@@ -148,8 +148,13 @@ abstract class Scrambler extends NodeVisitorAbstract
      **/
     public function addIgnore($ignore)
     {
-        $this->ignore = array_merge($this->ignore, (array) $ignore);
-
+        if (is_string($ignore)) {
+            $this->ignore = array_merge($this->ignore, array($ignore));
+        } else if (is_array($ignore)) {
+            $this->ignore = array_merge($this->ignore, $ignore);
+        } else {
+            throw new InvalidArgumentException('Invalid ignore type passed');
+        }
         return $this;
     }
 }
