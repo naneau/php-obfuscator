@@ -49,7 +49,7 @@ class ScrambleUse extends ScramblerVisitor
     /**
      * Active class
      *
-     * @var ClassStatement
+     * @var ClassStatement|bool
      **/
     private $classNode;
 
