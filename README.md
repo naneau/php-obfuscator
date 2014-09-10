@@ -24,13 +24,13 @@ You may find that you'll need to prevent certain variables and methods from bein
 parameters:
 
     # Ignore variable names
-    obfuscator.node_visitor.scramble_variable.ignore:
+    obfuscator.scramble_variable.ignore:
         - foo
         - bar
         - baz
 
     # Ignore certain methods names
-    obfuscator.node_visitor.scramble_private_method.ignore:
+    obfuscator.scramble_private_method.ignore:
         - foo
         - bar
         - baz

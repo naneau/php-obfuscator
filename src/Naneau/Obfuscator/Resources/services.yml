@@ -1,10 +1,10 @@
 parameters:
 
     # Ignore lists
-    obfuscator.node_visitor.scramble_variable.ignore: []
-    obfuscator.node_visitor.scramble_private_method.ignore: []
-    obfuscator.node_visitor.scramble_private_property.ignore: []
-    obfuscator.node_visitor.scramble_use.ignore: []
+    obfuscator.scramble_variable.ignore: []
+    obfuscator.scramble_private_method.ignore: []
+    obfuscator.scramble_private_property.ignore: []
+    obfuscator.scramble_use.ignore: []
 
 services:
 
@@ -34,7 +34,7 @@ services:
         arguments:
              - @obfuscator.scrambler
         calls:
-            - [addIgnore, [%obfuscator.node_visitor.scramble_variable.ignore%]]
+            - [addIgnore, [%obfuscator.scramble_variable.ignore%]]
 
     # Scramble private methods
     obfuscator.node_visitor.scramble_private_method:
@@ -42,7 +42,7 @@ services:
         arguments:
              - @obfuscator.scrambler
         calls:
-            - [addIgnore, [%obfuscator.node_visitor.scramble_private_method.ignore%]]
+            - [addIgnore, [%obfuscator.scramble_private_method.ignore%]]
 
     # Scramble private properties
     obfuscator.node_visitor.scramble_private_property:
@@ -50,7 +50,7 @@ services:
         arguments:
              - @obfuscator.scrambler
         calls:
-            - [addIgnore, [%obfuscator.node_visitor.scramble_private_property.ignore%]]
+            - [addIgnore, [%obfuscator.scramble_private_property.ignore%]]
 
     # Scramble use statements
     obfuscator.node_visitor.scramble_use:
@@ -58,7 +58,7 @@ services:
         arguments:
              - @obfuscator.scrambler
         calls:
-            - [addIgnore, [%obfuscator.node_visitor.scramble_use.ignore%]]
+            - [addIgnore, [%obfuscator.scramble_use.ignore%]]
 
     # Name resolver (needed before scramble_use)
     obfuscator.node_visitor.name_resolver:
