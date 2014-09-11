@@ -1,7 +1,7 @@
 #!/usr/bin/env php
 <?php
 
-include __DIR__ . '/vendor/autoload.php';
+include __DIR__ . '/../vendor/autoload.php';
 
 ini_set('xdebug.max_nesting_level', 2000);
 

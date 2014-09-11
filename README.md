@@ -15,8 +15,10 @@ It is compatible with PHP up to and including 5.5.
 After cloning this repository (`git clone https://github.com/naneau/php-obfuscator`), run the following command to obfuscate a directory of PHP files:
 
 ```bash
-./obfuscate obfuscate /input/directory /output/directory
+./bin/obfuscate obfuscate /input/directory /output/directory
 ```
+
+If you've installed this package through [Composer](https://getcomposer.org), you'll find the `obfuscate` command in the relevant [bin dir](https://getcomposer.org/doc/articles/vendor-binaries.md).
 
 ### Configuration
 
@@ -41,5 +43,5 @@ parameters:
 You can run the obfuscator with a configuration file through
 
 ```bash
-./obfuscate obfuscate /input/directory /output/directory --config=/foo/bar/config.yml
+./bin/obfuscate obfuscate /input/directory /output/directory --config=/foo/bar/config.yml
 ```
