@@ -2,7 +2,7 @@
     "name":               "naneau/php-obfuscator",
     "description":        "A basic but functional PHP obfuscator for object oriented PHP",
     "license":            "MIT",
-    "minimum-stability":  "dev", // Dev for php-parser ~1
+    "minimum-stability":  "dev",
 
     "bin": [
         "bin/obfuscate"
