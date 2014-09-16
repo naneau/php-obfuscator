@@ -65,6 +65,13 @@ class Obfuscator
     private $eventDispatcher;
 
     /**
+     * The file regex
+     *
+     * @var string
+     **/
+    private $fileRegex = '/\.php$/';
+
+    /**
      * Strip whitespace
      *
      * @param  string $directory
@@ -182,6 +189,29 @@ class Obfuscator
     }
 
     /**
+     * Get the regex for file inclusion
+     *
+     * @return string
+     */
+    public function getFileRegex()
+    {
+        return $this->fileRegex;
+    }
+
+    /**
+     * Set the regex for file inclusion
+     *
+     * @param string $fileRegex
+     * @return Obfuscator
+     */
+    public function setFileRegex($fileRegex)
+    {
+        $this->fileRegex = $fileRegex;
+
+        return $this;
+    }
+
+    /**
      * Get the file list
      *
      * @return SplFileInfo
@@ -192,7 +222,7 @@ class Obfuscator
             new RecursiveIteratorIterator(
                 new RecursiveDirectoryIterator($directory)
             ),
-            '/^(.(?!Resources))*\.php$/'
+            $this->getFileRegex()
         );
     }
 

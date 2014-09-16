@@ -6,6 +6,9 @@ parameters:
     obfuscator.scramble_private_property.ignore: []
     obfuscator.scramble_use.ignore: []
 
+    # Files to parse
+    obfuscator.files: "/\.php$/"
+
 services:
 
     # Obfuscator
@@ -16,6 +19,7 @@ services:
             - [setTraverser, [@obfuscator.node_traverser]]
             - [setPrettyPrinter, [@obfuscator.pretty_printer]]
             - [setEventDispatcher, [@obfuscator.event_dispatcher]]
+            - [setFileRegex, [%obfuscator.files%]]
 
     # String scrambler
     obfuscator.scrambler:
