@@ -12,7 +12,7 @@ It is compatible with PHP up to and including 5.5.
 
 ## Usage
 
-After cloning this repository (`git clone https://github.com/naneau/php-obfuscator`), run the following command to obfuscate a directory of PHP files:
+After cloning this repository (`git clone https://github.com/naneau/php-obfuscator`) and installing the dependencies through Composer (`composer install`), run the following command to obfuscate a directory of PHP files:
 
 ```bash
 ./bin/obfuscate obfuscate /input/directory /output/directory
