@@ -45,7 +45,7 @@ class ScrambleVariable extends ScramblerVisitor
 
         $this->setIgnore(array(
             'this', '_SERVER', '_POST', '_GET', '_REQUEST', '_COOKIE',
-            '_SESSION', '_ENV'
+            '_SESSION', '_ENV', '_FILES'
         ));
     }
 
