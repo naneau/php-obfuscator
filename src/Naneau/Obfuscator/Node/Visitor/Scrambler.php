@@ -63,6 +63,11 @@ abstract class Scrambler extends NodeVisitorAbstract
         // String/value to scramble
         $toScramble = $node->$var;
 
+        // We ignore to scramble if it's not string (ex: a variable variable name)
+        if (!is_string($toScramble)) {
+            return;
+        }
+
         // Make sure there's something to scramble
         if (strlen($toScramble) === 0) {
             throw new InvalidArgumentException(sprintf(
