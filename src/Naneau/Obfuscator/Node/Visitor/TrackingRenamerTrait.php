@@ -52,6 +52,11 @@ trait TrackingRenamerTrait
             return false;
         }
 
+        // Ignore variable functions
+        if (!is_string($method)) {
+            return false;
+        }
+
         return isset($this->renamed[$method]);
     }
 
