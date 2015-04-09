@@ -12,6 +12,7 @@ use Naneau\Obfuscator\Container;
 
 use Naneau\Obfuscator\Obfuscator;
 use Naneau\Obfuscator\Obfuscator\Event\File as FileEvent;
+use Naneau\Obfuscator\Obfuscator\Event\FileError as FileErrorEvent;
 
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -71,6 +72,11 @@ class ObfuscateCommand extends Command
                 InputOption::VALUE_NONE,
                 'Leave whitespace in output?'
             )->addOption(
+                'ignore_error',
+                null,
+                InputOption::VALUE_NONE,
+                'Continue processing the next file when error is encountered'
+            )->addOption(
                 'config',
                 null,
                 InputOption::VALUE_REQUIRED,
@@ -113,6 +119,7 @@ class ObfuscateCommand extends Command
 
         // Strip whitespace?
         $stripWhitespace = !$input->getOption('leave_whitespace');
+        $ignoreError = !!$input->getOption('ignore_error');
 
         // Show every file
         $this->getObfuscator()->getEventDispatcher()->addListener(
@@ -124,9 +131,25 @@ class ObfuscateCommand extends Command
                 ));
             }
         );
+        // Show error processing file
+        if($ignoreError) {
+            $this->getObfuscator()->getEventDispatcher()->addListener(
+                'obfuscator.file.error',
+                function(FileErrorEvent $event) use ($output, $directory) {
+                    $output->writeln(sprintf(
+                        'Error obfuscating <error>%s</error>',
+                        substr($event->getFile(), strlen($directory))
+                    ));
+                    $output->writeln(sprintf(
+                        'Parsing error: <error>%s</error>', $event->getErrorMessage()
+                    ));
+                }
+            );
+        }
 
         // Actual obfuscation
-        $this->getObfuscator()->obfuscate($directory, $stripWhitespace);
+        $this->getObfuscator()->obfuscate($directory, $stripWhitespace,
+            $ignoreError);
     }
 
     /**
