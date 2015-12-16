@@ -16,6 +16,7 @@ use PhpParser\NodeVisitorAbstract;
 use PhpParser\Node;
 use PhpParser\Node\Stmt;
 use PhpParser\Node\Param;
+use PhpParser\Node\Stmt\StaticVar;
 use PhpParser\Node\Expr\Variable;
 use PhpParser\Node\Stmt\Catch_ as CatchStatement;
 use PhpParser\Node\Expr\ClosureUse;
@@ -58,7 +59,7 @@ class ScrambleVariable extends ScramblerVisitor
     public function enterNode(Node $node)
     {
         // Function param or variable use
-        if ($node instanceof Param || $node instanceof Variable) {
+        if ($node instanceof Param || $node instanceof StaticVar || $node instanceof Variable) {
             return $this->scramble($node);
         }
 
