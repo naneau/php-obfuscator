@@ -99,7 +99,7 @@ class ScramblePrivateProperty extends ScramblerVisitor
     {
         foreach ($nodes as $node) {
             // Scramble the private method definitions
-            if ($node instanceof Property && $node->type === ClassNode::MODIFIER_PRIVATE) {
+            if ($node instanceof Property && ($node->type & ClassNode::MODIFIER_PRIVATE)) {
                 foreach($node->props as $property) {
 
                     // Record original name and scramble it
