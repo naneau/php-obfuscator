@@ -75,6 +75,13 @@ class ObfuscateCommand extends Command
                 null,
                 InputOption::VALUE_REQUIRED,
                 'Configuration file to use'
+            )->addOption(
+                'memory_limit',
+                null,
+                InputOption::VALUE_REQUIRED,
+                'Runtime memory when running the obsfucator. ' .
+                'Example: 128M ' .
+                'See http://php.net/manual/en/ini.core.php#ini.memory-limit'
             );
 
         $this->setContainer(new Container);
@@ -92,6 +99,10 @@ class ObfuscateCommand extends Command
         // Finalize the container
         $this->finalizeContainer($input);
 
+        // Change runtime memory
+        if($memory = $input->getOption('memory_limit')) {
+            ini_set("memory_limit", $memory);
+        }
         // Input/output dirs
         $inputDirectory = $input->getArgument('input_directory');
         $outputDirectory = $input->getArgument('output_directory');
