@@ -194,18 +194,37 @@ class ObfuscateCommand extends Command
      **/
     private function copyDir($from, $to)
     {
-        // FIXME implement native copy
-        $output = array();
-        $return = 0;
-        $command = sprintf('cp -rf %s %s', $from, $to);
-
-        exec($command, $output, $return);
-
-        if ($return !== 0)  {
+        $this->copyDirectory($from, $to);
+        
+        if (!is_dir($to))  {
             throw new \Exception('Could not copy directory');
         }
-
+        
         return $this;
+    }
+    
+    /**
+     * Recursively copy a directory
+     *
+     * @param string $src
+     * @param string $dst
+     * @return void
+     **/
+    private function copyDirectory($src,$dst)
+    {
+        $dir = opendir($src);
+        @mkdir($dst);
+        while(false !== ( $file = readdir($dir)) ) {
+            if (( $file != '.' ) && ( $file != '..' )) {
+                if ( is_dir($src . '/' . $file) ) {
+                    $this->copyDirectory($src . '/' . $file,$dst . '/' . $file);
+                }
+                else {
+                    copy($src . '/' . $file,$dst . '/' . $file);
+                }
+            }
+        }
+        closedir($dir);
     }
 
     /**
