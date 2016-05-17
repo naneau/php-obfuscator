@@ -20,7 +20,7 @@ use PhpParser\Node;
 use PhpParser\Node\Stmt\Class_ as ClassNode;
 use PhpParser\Node\Stmt\ClassMethod;
 use PhpParser\Node\Expr\MethodCall;
-
+use PhpParser\Node\Expr\StaticCall;
 use PhpParser\Node\Expr\Variable;
 
 /**
@@ -75,7 +75,7 @@ class ScramblePrivateMethod extends ScramblerVisitor
         }
 
         // Scramble calls
-        if ($node instanceof MethodCall) {
+        if ($node instanceof MethodCall || $node instanceof StaticCall) {
 
             // Node wasn't renamed
             if (!$this->isRenamed($node->name)) {
