@@ -197,7 +197,14 @@ class ObfuscateCommand extends Command
         // FIXME implement native copy
         $output = array();
         $return = 0;
-        $command = sprintf('cp -rf %s %s', $from, $to);
+
+        if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
+            // WINDOWS
+            $command = sprintf('XCOPY "%s" "%s" /hievry', $from, $to);
+        } else {
+            // *NIX
+            $command = sprintf('cp -rf %s %s', $from, $to);
+        }        
 
         exec($command, $output, $return);
 
