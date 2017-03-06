@@ -243,7 +243,12 @@ class Obfuscator
             // Input code
             $source = php_strip_whitespace($file);
 
-            return $this->_obfuscateSource($source);
+            // Get AST
+            $ast = $this->getTraverser()->traverse(
+                $this->getParser()->parse($source)
+            );
+
+            return "<?php\n" . $this->getPrettyPrinter()->prettyPrint($ast);
         } catch (Exception $e) {
             if($ignoreError) {
                 sprintf('Could not parse file "%s"', $file);
@@ -259,18 +264,5 @@ class Obfuscator
                 );
             }
         }
-    }
-
-    /**
-     * @param string $sourceCode
-     * @return string
-     */
-    protected function _obfuscateSource($sourceCode) {
-        // Get AST
-        $ast = $this->getTraverser()->traverse(
-            $this->getParser()->parse($sourceCode)
-        );
-
-        return "<?php\n" . $this->getPrettyPrinter()->prettyPrint($ast);
     }
 }
