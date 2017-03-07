@@ -23,7 +23,7 @@ class ObfuscateTest extends Base {
             if ($expectedFileName === '.' || $expectedFileName === '..') {
                 continue;
             }
-            if (!file_exists(__DIR__ . self::EXPECTED_PATH . "/" . $expectedFileName)) {
+            if (!file_exists(__DIR__ . self::AFTER_PATH . "/" . $expectedFileName)) {
                 $this->fail("{$expectedFileName} not found");
             }
             $this->assertEquals(file_get_contents(__DIR__ . self::EXPECTED_PATH . "/" . $expectedFileName), file_get_contents(__DIR__ . self::AFTER_PATH . "/" . $expectedFileName));
