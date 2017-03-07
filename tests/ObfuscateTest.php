@@ -13,7 +13,7 @@ class ObfuscateTest extends Base {
         foreach ($files as $file) {
             unlink($file);
         }
-        rmdir(__DIR__ . "/after");
+        rmdir(__DIR__ . self::AFTER_PATH);
     }
 
     public function testObfuscate() {
@@ -21,9 +21,10 @@ class ObfuscateTest extends Base {
         $expectedFileNames = scandir(__DIR__ . self::EXPECTED_PATH);
         foreach ($expectedFileNames as $expectedFileName) {
             if ($expectedFileName === '.' || $expectedFileName === '..') {
-                if (!file_exists(__DIR__ . self::EXPECTED_PATH . "/" . $expectedFileName)) {
-                    $this->fail("{$expectedFileName} not found");
-                }
+                continue;
+            }
+            if (!file_exists(__DIR__ . self::EXPECTED_PATH . "/" . $expectedFileName)) {
+                $this->fail("{$expectedFileName} not found");
             }
             $this->assertEquals(file_get_contents(__DIR__ . self::EXPECTED_PATH . "/" . $expectedFileName), file_get_contents(__DIR__ . self::AFTER_PATH . "/" . $expectedFileName));
         }
