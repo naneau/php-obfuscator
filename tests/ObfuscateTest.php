@@ -2,57 +2,30 @@
 
 namespace Tests;
 
-use PhpParser\Parser;
-use PhpParser\Lexer;
-use PhpParser\NodeTraverser;
-use PhpParser\PrettyPrinter\Standard as PrettyPrinter;
-use Symfony;
-use Naneau;
-use Symfony\Component\Console\Tests;
-
 class ObfuscateTest extends Base {
 
-    protected function setUp() {
-        mkdir("./tests/before");
-    }
+    const AFTER_PATH    = "/after";
+    const BEFORE_PATH   = "/before";
+    const EXPECTED_PATH = "/expected";
 
     protected function tearDown() {
-        unlink("./tests/before/source.php");
-        unlink("./tests/after/source.php");
-        rmdir("./tests/before");
-        rmdir("./tests/after");
+        $files = glob(__DIR__ . self::AFTER_PATH . "/*");
+        foreach ($files as $file) {
+            unlink($file);
+        }
+        rmdir(__DIR__ . "/after");
     }
 
-    /**
-     * @param string $before
-     * @param string $after
-     * @dataProvider obfuscateProvider
-     */
-    public function testObfuscate($before, $after) {
-        file_put_contents("./tests/before/source.php", $before);
-        shell_exec("./bin/obfuscate obfuscate ./tests/before ./tests/after");
-        $obfuscated = file_get_contents("./tests/after/source.php");
-        $this->assertEquals($after, $obfuscated);
-    }
-
-    /**
-     * @return array
-     */
-    public function obfuscateProvider() {
-        return [
-            [
-'<?php
-
-class a {
-    private $vasya = "Pupkin";
-    private function test() {
-        echo "hi";
-    }
-}'
-,
-'<?php
-class a { private $vasya = \'Pupkin\'; private function spdfcc8c() { echo \'hi\'; } }'
-            ],
-        ];
+    public function testObfuscate() {
+        shell_exec("./bin/obfuscate obfuscate " . __DIR__ . self::BEFORE_PATH . " " . __DIR__ . self::AFTER_PATH . " --config=" . __DIR__ . "/config.yml");
+        $expectedFileNames = scandir(__DIR__ . self::EXPECTED_PATH);
+        foreach ($expectedFileNames as $expectedFileName) {
+            if ($expectedFileName === '.' || $expectedFileName === '..') {
+                if (!file_exists(__DIR__ . self::EXPECTED_PATH . "/" . $expectedFileName)) {
+                    $this->fail("{$expectedFileName} not found");
+                }
+            }
+            $this->assertEquals(file_get_contents(__DIR__ . self::EXPECTED_PATH . "/" . $expectedFileName), file_get_contents(__DIR__ . self::AFTER_PATH . "/" . $expectedFileName));
+        }
     }
 }

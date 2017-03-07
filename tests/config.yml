@@ -1,0 +1,7 @@
+services:
+
+    # String scrambler
+    obfuscator.scrambler:
+        class: Naneau\Obfuscator\StringScrambler
+        arguments:
+            - 'salt'
