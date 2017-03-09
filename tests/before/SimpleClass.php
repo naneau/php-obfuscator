@@ -2,6 +2,10 @@
 
 class SimpleClass {
 
+    const CONSTANT_VARIABLE = "test";
+
+    static $staticProperty = "test";
+
     private $_privateProperty;
     protected $_protectedProperty;
     public $publicProperty;
