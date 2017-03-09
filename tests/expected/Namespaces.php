@@ -1,2 +1,2 @@
 <?php
-namespace namespaceA; class classA { } namespace namespaceB; use namespaceA; class classB { private $_objectA; public function __construct() { $this->_objectA = new namespaceA\classA(); } }
+namespace namespaceA; class classA { } namespace namespaceB; use namespaceA\classA as spf0f507; class classB { private $spa26210; public function __construct() { $this->spa26210 = new spf0f507(); } }
