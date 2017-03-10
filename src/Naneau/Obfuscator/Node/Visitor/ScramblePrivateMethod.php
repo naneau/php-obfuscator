@@ -75,8 +75,7 @@ class ScramblePrivateMethod extends ScramblerVisitor
         }
 
         // Scramble calls
-        if ($node instanceof MethodCall || $node instanceof StaticCall) {
-
+        if (($node instanceof MethodCall && $node->var->name === 'this') || ($node instanceof StaticCall && $node->class instanceof Node\Name && $node->class->toString() === 'self')) {
             // Node wasn't renamed
             if (!$this->isRenamed($node->name)) {
                 return;
