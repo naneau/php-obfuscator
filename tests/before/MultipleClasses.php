@@ -36,6 +36,8 @@ class SecondClass extends FirstClass {
 
 class ThirdClass {
 
+    private $publicProperty;
+
     static private function anotherPublicMethod() {
 
     }
@@ -43,6 +45,7 @@ class ThirdClass {
     public function __construct(SecondClass $secondObject) {
         $secondObject->publicMethod();
         $secondObject::anotherPublicMethod();
+        $secondObject->publicProperty = 'test';
     }
 
     private function publicMethod() {
@@ -50,6 +53,7 @@ class ThirdClass {
     }
 
     protected function someFunc() {
+        $this->publicProperty = 'test';
         $this->publicMethod();
         self::anotherPublicMethod();
     }

@@ -46,13 +46,6 @@ class ScramblePrivateMethod extends ScramblerVisitor
     use SkipTrait;
 
     /**
-     * Active class
-     *
-     * @var ClassNode|bool
-     **/
-    private $currentClassNode;
-
-    /**
      * Before node traversal
      *
      * @param  Node[] $nodes
@@ -79,10 +72,6 @@ class ScramblePrivateMethod extends ScramblerVisitor
     {
         if ($this->shouldSkip()) {
             return;
-        }
-
-        if ($node instanceof ClassNode) {
-            $this->currentClassNode = $node;
         }
 
         // Scramble calls
