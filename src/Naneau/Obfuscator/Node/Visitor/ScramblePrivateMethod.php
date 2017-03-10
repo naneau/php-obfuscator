@@ -46,6 +46,13 @@ class ScramblePrivateMethod extends ScramblerVisitor
     use SkipTrait;
 
     /**
+     * Active class
+     *
+     * @var ClassNode|bool
+     **/
+    private $currentClassNode;
+
+    /**
      * Before node traversal
      *
      * @param  Node[] $nodes
@@ -74,9 +81,12 @@ class ScramblePrivateMethod extends ScramblerVisitor
             return;
         }
 
-        // Scramble calls
-        if ($node instanceof MethodCall || $node instanceof StaticCall) {
+        if ($node instanceof ClassNode) {
+            $this->currentClassNode = $node;
+        }
 
+        // Scramble calls
+        if (($node instanceof MethodCall && $node->var->name === 'this') || ($node instanceof StaticCall && $node->class instanceof Node\Name && $node->class->toString() === 'self')) {
             // Node wasn't renamed
             if (!$this->isRenamed($node->name)) {
                 return;

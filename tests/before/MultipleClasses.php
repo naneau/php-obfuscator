@@ -29,10 +29,28 @@ class SecondClass extends FirstClass {
         echo "This is public method of second class";
         $this->_privateProperty = parent::$publicProperty;
     }
+
+    static public function anotherPublicMethod() {
+    }
 }
 
 class ThirdClass {
+
+    static private function anotherPublicMethod() {
+
+    }
+
     public function __construct(SecondClass $secondObject) {
         $secondObject->publicMethod();
+        $secondObject::anotherPublicMethod();
+    }
+
+    private function publicMethod() {
+        echo 'test';
+    }
+
+    protected function someFunc() {
+        $this->publicMethod();
+        self::anotherPublicMethod();
     }
 }
