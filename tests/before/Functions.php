@@ -11,6 +11,11 @@ function functionB() {
     return functionB($localVarB);
 }
 
+function functionC(?int $a): ?string {
+    return $a === null ? null : "Output: " . $a;
+}
+
 $localVarMainA = "local value";
 $localVarMainB = functionB();
 $localVarMainA = functionA($localVarMainA);
+functionC();
