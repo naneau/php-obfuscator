@@ -70,7 +70,7 @@ services:
 
     # Parser
     obfuscator.parser:
-        class: PhpParser\Parser
+        class: PhpParser\Parser\Php7
         arguments:
             - @obfuscator.lexer
 

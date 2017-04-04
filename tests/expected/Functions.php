@@ -1,2 +1,2 @@
 <?php
-function functionA($spc5a579) { $sp0edd21 = 3; return $spc5a579 + $sp0edd21; } function functionB() { $sp6a6761 = 5; return functionB($sp6a6761); } $sp8851f9 = 'local value'; $sp7f60ff = functionB(); $sp8851f9 = functionA($sp8851f9);
+function functionA($spc5a579) { $sp0edd21 = 3; return $spc5a579 + $sp0edd21; } function functionB() { $sp6a6761 = 5; return functionB($sp6a6761); } function functionC(?int $spf4ffb5) : ?string { return $spf4ffb5 === null ? null : "Output: " . $spf4ffb5; } $sp8851f9 = "local value"; $sp7f60ff = functionB(); $sp8851f9 = functionA($sp8851f9); functionC();
