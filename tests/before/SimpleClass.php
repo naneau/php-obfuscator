@@ -37,6 +37,9 @@ class SimpleClass {
         $this->publicProperty = $localVar;
         $this->_protectedMethod();
         $this->_privateMethod();
+        $dt = new \DateTime();
+        $dtMethodName = "getTimestamp";
+        $dt->$dtMethodName();
     }
 }
 
