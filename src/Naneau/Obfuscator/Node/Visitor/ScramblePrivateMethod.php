@@ -57,7 +57,9 @@ class ScramblePrivateMethod extends ScramblerVisitor
             ->resetRenamed()
             ->skip($this->variableMethodCallsUsed($nodes));
 
-        $this->scanMethodDefinitions($nodes);
+        if (!$this->shouldSkip()) {
+            $this->scanMethodDefinitions($nodes);
+        }
 
         return $nodes;
     }
@@ -95,7 +97,7 @@ class ScramblePrivateMethod extends ScramblerVisitor
     private function variableMethodCallsUsed(array $nodes)
     {
         foreach ($nodes as $node) {
-            if ($node instanceof MethodCall && $node->name instanceof Variable) {
+            if ($node instanceof MethodCall && $node->name instanceof Variable && $node->var->name === "this") {
                 // A method call uses a Variable as its name
                 return true;
             }
