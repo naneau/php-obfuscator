@@ -138,7 +138,6 @@ class ScrambleUse extends ScramblerVisitor
             || $node instanceof NewExpression
             || $node instanceof InstanceOfExpression
         ) {
-
             // We need to be in a class for this to work
             if (empty($this->classNode)) {
                 return;
@@ -160,6 +159,12 @@ class ScrambleUse extends ScramblerVisitor
             if ($this->isRenamed($name)) {
                 $node->class = new Name($this->getNewName($name));
                 return $node;
+            } else {
+                if ($this->isRenamed($node->class->getFirst())) {
+                    reset($node->class->parts);
+                    $node->class->parts[key($node->class->parts)] = $this->getNewName($node->class->getFirst());
+                    return $node;
+                }
             }
         }
     }
