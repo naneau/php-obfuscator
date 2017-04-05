@@ -4,7 +4,10 @@ class SimpleClass {
 
     const CONSTANT_VARIABLE = "test";
 
-    static $staticProperty = "test";
+    public static $publicStaticProperty = "test";
+    protected static $protectedStaticProperty = "test";
+    private static  $_privateStaticProperty = "test";
+
 
     private $_privateProperty;
     protected $_protectedProperty;
@@ -15,6 +18,9 @@ class SimpleClass {
         $this->_privateProperty = $localVar;
         $this->_protectedProperty = $localVar;
         $this->publicProperty = $localVar;
+        self::$publicStaticProperty = "test";
+        self::$protectedStaticProperty = "test";
+        self::$_privateStaticProperty = "test";
     }
 
     protected function _protectedMethod() {
