@@ -35,7 +35,7 @@ class classB {
 
 class classE extends namespaceDAlias\classD implements namespaceDAlias\interfaceA {
 
-    public function method(namespaceDAlias\classD $objectD) {
+    public function method(namespaceDAlias\classD $objectD) : ?namespaceDAlias\classD {
 
     }
 }
