@@ -12,6 +12,10 @@ class classD {
 
 }
 
+interface interfaceA {
+
+}
+
 namespace namespaceB;
 
 use namespaceA\classA as classC;
@@ -29,3 +33,6 @@ class classB {
     }
 }
 
+class classE extends namespaceDAlias\classD implements namespaceDAlias\interfaceA {
+
+}
