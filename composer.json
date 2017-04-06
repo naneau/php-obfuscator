@@ -22,7 +22,7 @@
     ],
 
     "require": {
-        "nikic/php-parser":              "~1@dev",
+        "nikic/php-parser":              "~3@dev",
         "symfony/console":               "~2.5",
         "symfony/dependency-injection":  "~2.5",
         "symfony/config":                "~2.5",

@@ -78,7 +78,18 @@ class ScramblePrivateProperty extends ScramblerVisitor
     {
         if ($node instanceof PropertyFetch) {
 
-            if (!is_string($node->name)) {
+            if (!is_string($node->name) || $node->var->name !== "this") {
+                return;
+            }
+
+            if ($this->isRenamed($node->name)) {
+                $node->name = $this->getNewName($node->name);
+                return $node;
+            }
+        }
+
+        if ($node instanceof Node\Expr\StaticPropertyFetch) {
+            if ((string)$node->class !== "self") {
                 return;
             }
 

@@ -1,0 +1,16 @@
+services:
+
+    # String scrambler
+    obfuscator.scrambler:
+        class: Naneau\Obfuscator\StringScrambler
+        arguments:
+            - 'salt'
+
+    # Node traverser
+    obfuscator.node_traverser:
+        class: PhpParser\NodeTraverser
+        calls:
+            - [addVisitor, [@obfuscator.node_visitor.scramble_variable]]
+            - [addVisitor, [@obfuscator.node_visitor.scramble_private_method]]
+            - [addVisitor, [@obfuscator.node_visitor.scramble_private_property]]
+            - [addVisitor, [@obfuscator.node_visitor.scramble_use]]
