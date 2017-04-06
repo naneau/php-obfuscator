@@ -109,7 +109,7 @@ class ScrambleUse extends ScramblerVisitor
                         $implements[] = new Name($this->getNewName($oldName));
                     } elseif ($this->isRenamed($implementsName->getFirst())) {
                         reset($implementsName->parts);
-                        $implementsName->parts[key($node->extends->parts)] = $this->getNewName($implementsName->getFirst());
+                        $implementsName->parts[key($implementsName->parts)] = $this->getNewName($implementsName->getFirst());
                         $implements[] = $implementsName;
                     } else {
                         // If not renamed, pass old one
