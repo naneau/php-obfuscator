@@ -133,6 +133,10 @@ class ScrambleUse extends ScramblerVisitor
             if ($this->isRenamed($name)) {
                 $node->type = $this->getNewName($name);
                 return $node;
+            } elseif ($this->isRenamed($node->type->getFirst())) {
+                reset($node->type->parts);
+                $node->type->parts[key($node->type->parts)] = $this->getNewName($node->type->getFirst());
+                return $node;
             }
         }
 
