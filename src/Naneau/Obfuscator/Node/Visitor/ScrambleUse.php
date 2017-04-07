@@ -156,9 +156,23 @@ class ScrambleUse extends ScramblerVisitor
             }
         }
 
+        if ($node instanceof Param && $node->type instanceof Node\NullableType && $node->type->type instanceof Name) {
+            // Name
+            $name = $node->type->type->toString();
+
+            // Has it been renamed?
+            if ($this->isRenamed($name)) {
+                $node->type->type = $this->getNewName($name);
+                return $node;
+            } elseif ($this->isRenamed($node->type->type->getFirst())) {
+                reset($node->type->type->parts);
+                $node->type->type->parts[key($node->type->type->parts)] = $this->getNewName($node->type->type->getFirst());
+                return $node;
+            }
+        }
+
         // Param rename
         if ($node instanceof Param && $node->type instanceof Name) {
-
             // Name
             $name = $node->type->toString();
 
