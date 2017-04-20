@@ -88,13 +88,16 @@ class ScrambleUse extends ScramblerVisitor
                 $extends = $node->extends->toString();
                 if ($this->isRenamed($extends)) {
                     $node->extends = new Name($this->getNewName($extends));
+                } elseif ($this->isRenamed($node->extends->getFirst())) {
+                    reset($node->extends->parts);
+                    $node->extends->parts[key($node->extends->parts)] = $this->getNewName($node->extends->getFirst());
                 }
             }
 
             // Classes that implement an interface
             if ($node->implements !== null && count($node->implements) > 0) {
 
-                $implements = array();
+                $implements = [];
 
                 foreach($node->implements as $implementsName) {
 
@@ -104,6 +107,10 @@ class ScrambleUse extends ScramblerVisitor
                     if ($this->isRenamed($oldName)) {
                         // If renamed, set new one
                         $implements[] = new Name($this->getNewName($oldName));
+                    } elseif ($this->isRenamed($implementsName->getFirst())) {
+                        reset($implementsName->parts);
+                        $implementsName->parts[key($implementsName->parts)] = $this->getNewName($implementsName->getFirst());
+                        $implements[] = $implementsName;
                     } else {
                         // If not renamed, pass old one
                         $implements[] = $implementsName;
@@ -116,15 +123,66 @@ class ScrambleUse extends ScramblerVisitor
             return $node;
         }
 
+        if ($node instanceof Node\Stmt\ClassMethod || $node instanceof Node\Expr\Closure) {
+
+            if ($node->returnType instanceof Name) {
+                // Name
+                $name = $node->returnType->toString();
+
+                // Has it been renamed?
+                if ($this->isRenamed($name)) {
+                    $node->returnType = $this->getNewName($name);
+                    return $node;
+                } elseif ($this->isRenamed($node->returnType->getFirst())) {
+                    reset($node->returnType->parts);
+                    $node->returnType->parts[key($node->returnType->parts)] = $this->getNewName($node->returnType->getFirst());
+                    return $node;
+                }
+            }
+
+            if ($node->returnType instanceof Node\NullableType && $node->returnType->type instanceof Name) {
+                // Name
+                $name = $node->returnType->type->toString();
+
+                // Has it been renamed?
+                if ($this->isRenamed($name)) {
+                    $node->returnType->type = $this->getNewName($name);
+                    return $node;
+                } elseif ($this->isRenamed($node->returnType->type->getFirst())) {
+                    reset($node->returnType->type->parts);
+                    $node->returnType->type->parts[key($node->returnType->type->parts)] = $this->getNewName($node->returnType->type->getFirst());
+                    return $node;
+                }
+            }
+        }
+
+        if ($node instanceof Param && $node->type instanceof Node\NullableType && $node->type->type instanceof Name) {
+            // Name
+            $name = $node->type->type->toString();
+
+            // Has it been renamed?
+            if ($this->isRenamed($name)) {
+                $node->type->type = $this->getNewName($name);
+                return $node;
+            } elseif ($this->isRenamed($node->type->type->getFirst())) {
+                reset($node->type->type->parts);
+                $node->type->type->parts[key($node->type->type->parts)] = $this->getNewName($node->type->type->getFirst());
+                return $node;
+            }
+        }
+
         // Param rename
         if ($node instanceof Param && $node->type instanceof Name) {
-
             // Name
             $name = $node->type->toString();
 
             // Has it been renamed?
             if ($this->isRenamed($name)) {
                 $node->type = $this->getNewName($name);
+                return $node;
+            } elseif ($this->isRenamed($node->type->getFirst())) {
+                reset($node->type->parts);
+                $node->type->parts[key($node->type->parts)] = $this->getNewName($node->type->getFirst());
                 return $node;
             }
         }
@@ -138,7 +196,6 @@ class ScrambleUse extends ScramblerVisitor
             || $node instanceof NewExpression
             || $node instanceof InstanceOfExpression
         ) {
-
             // We need to be in a class for this to work
             if (empty($this->classNode)) {
                 return;
@@ -160,6 +217,12 @@ class ScrambleUse extends ScramblerVisitor
             if ($this->isRenamed($name)) {
                 $node->class = new Name($this->getNewName($name));
                 return $node;
+            } else {
+                if ($this->isRenamed($node->class->getFirst())) {
+                    reset($node->class->parts);
+                    $node->class->parts[key($node->class->parts)] = $this->getNewName($node->class->getFirst());
+                    return $node;
+                }
             }
         }
     }
