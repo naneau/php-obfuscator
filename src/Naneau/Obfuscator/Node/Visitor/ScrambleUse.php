@@ -123,7 +123,7 @@ class ScrambleUse extends ScramblerVisitor
             return $node;
         }
 
-        if ($node instanceof Node\Stmt\ClassMethod) {
+        if ($node instanceof Node\Stmt\ClassMethod || $node instanceof Node\Expr\Closure) {
 
             if ($node->returnType instanceof Name) {
                 // Name
