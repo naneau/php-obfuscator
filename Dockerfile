@@ -14,9 +14,11 @@ RUN composer install \
 # Final PHP Image
 FROM php:7.2-alpine
 
-WORKDIR /app
+WORKDIR /obfuscator
 
 COPY ./ ./
-COPY --from=composer /app/vendor/ /app/vendor/
+COPY --from=composer /app/vendor/ /obfuscator/vendor/
 
-ENTRYPOINT ["php", "/app/bin/obfuscate", "obfuscate"]
+ENV PATH="/obfuscator/bin:${PATH}"
+
+ENTRYPOINT ["php", "/obfuscator/bin/obfuscate", "obfuscate"]
