@@ -45,3 +45,26 @@ You can run the obfuscator with a configuration file through
 ```bash
 ./bin/obfuscate obfuscate /input/directory /output/directory --config=/foo/bar/config.yml
 ```
+
+### Dockerized Version
+
+You can use the Docker image to obfuscate your code
+```bash
+docker run --rm -it -v ./source:/code lion2486/naneau-php-obfuscator /code
+```
+
+Or you can use the image to integrate it in your docker build pipeline using multi-stage build.
+
+1. Add the obfuscator stage as below:
+```
+FROM lion2486/naneau-php-obfuscator AS obfuscator
+
+COPY . /code
+
+RUN php bin/obfuscate obfuscate /code
+```
+
+2. Copy your sources from the previous image like below:
+```
+COPY --from=obfuscator /code /var/www
+```
