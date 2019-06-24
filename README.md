@@ -50,7 +50,7 @@ You can run the obfuscator with a configuration file through
 
 You can use the Docker image to obfuscate your code
 ```bash
-docker run --rm -it -v ./source:/app/code lion2486/naneau-php-obfuscator /app/code
+docker run --rm -it -v ./source:/code lion2486/naneau-php-obfuscator /code
 ```
 
 Or you can use the image to integrate it in your docker build pipeline using multi-stage build.
