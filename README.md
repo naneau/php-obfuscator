@@ -45,3 +45,18 @@ You can run the obfuscator with a configuration file through
 ```bash
 ./bin/obfuscate obfuscate /input/directory /output/directory --config=/foo/bar/config.yml
 ```
+
+## Docker Support
+### Usage
+There is a docker image of this project. You could use it to implement obfuscation into your CI processes. It can be found <a href="https://hub.docker.com/repository/docker/zierhutit/naneau-php-obfuscator/general">here</A>. It is called `zierhutit/naneau-php-obfuscator/`.
+
+### Drone CI
+Example Configuration:
+```YAML
+- name: Obfuscation
+  image: zierhutit/naneau-php-obfuscator
+  commands: 
+    - mkdir /drone/src-tmp
+    - cp -rf /drone/src/* /drone/src-tmp
+    - /obfuscate/bin/obfuscate obfuscate /drone/src-tmp /drone/src
+```
